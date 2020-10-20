@@ -58,3 +58,32 @@
   display: flex;
   border: 0px solid gray!important;
 }
+
+.fab {
+  opacity: 0.4;
+  border-radius: 100%;
+  right: 5px;
+  bottom: 5px;
+  font-size: 20px;
+  padding: 20px;
+  position: fixed;
+}
+
+.fab:hover {
+  opacity: 1;
+}
+
+.fab-danger {
+  opacity: 0.4;
+  border-radius: 10px;
+  left: 5px;
+  bottom: 5px;
+  font-size: 20px;
+  padding: 10px;
+  position: fixed;
+  border: none;
+}
+
+.fab-danger:hover {
+  opacity: 1;
+}

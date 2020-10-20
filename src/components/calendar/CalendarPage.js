@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { uiOpenModal } from '../../actions/ui';
 
 import { Calendar, momentLocalizer } from 'react-big-calendar';
@@ -12,25 +12,18 @@ import { CalendarEvent } from './CalendarEvent';
 import { CalendarModal } from './CalendarModal';
 
 import { messages } from '../../helpers/calendarMessages';
+import { eventClear, eventSelect } from '../../actions/events';
+import { AddNewFab } from '../shared/AddNewFab';
+import { DeleteFab } from '../shared/DeleteFab';
 
 moment.locale('es');
 
-const localizer = momentLocalizer(moment); // or globalizeLocalizer
-const events = [{
-  title: 'Cumpleaños de Pedro',
-  start: moment().subtract(4, 'hours').toDate(),
-  end: moment().subtract(1, 'hours').toDate(),
-  notes: 'Comprar el wiskie',
-  user: {
-    _id: 102,
-    name: 'Francisco'
-  }
-}]
+const localizer = momentLocalizer(moment);
 
 export const CalendarPage = () => {
 
   const dispatch = useDispatch();
-
+  const { events } = useSelector(state => state.calendar);
   const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'month');
 
   const onDoubleClick = () => {
@@ -38,7 +31,7 @@ export const CalendarPage = () => {
   }
 
   const onSelect = (e) => {
-    console.log(e);
+    dispatch(eventSelect(e));
   }
 
   const onView = (e) => {
@@ -59,6 +52,11 @@ export const CalendarPage = () => {
       style
     }
   }
+
+  const onSelectSlot = (e) => {
+    dispatch(eventClear());
+  }
+
   return (
     <div className="calendar-screen">
       <NavBar />
@@ -73,6 +71,8 @@ export const CalendarPage = () => {
           eventPropGetter={eventPropGetter}
           onDoubleClickEvent={onDoubleClick}
           onSelectEvent={onSelect}
+          onSelectSlot={onSelectSlot}
+          selectable={true}
           onView={onView}
           view={lastView}
           components={{
@@ -81,6 +81,9 @@ export const CalendarPage = () => {
         />
         
       </div>
+
+      <DeleteFab />
+      <AddNewFab />
     </div>
   )
 }

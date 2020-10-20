@@ -1,4 +1,4 @@
-import { types } from "../types/types"
+import { types } from "../types/types";
 
 export const eventAdd = (event) => ({
   type: types.eventAdd,
@@ -10,7 +10,11 @@ export const eventSelect = (event) => ({
   payload: event
 });
 
+export const eventClear = () => ({ type: types.eventClear });
+
 export const eventEdit = (event) => ({
   type: types.eventEdit,
   payload: event
 });
+
+export const eventDelete = () => ({ type: types.eventDelete });
